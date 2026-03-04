@@ -118,9 +118,6 @@ cloudstack-chatbot/
 3. **Open index.html in browser**
    - Chat widget should appear in bottom-right corner
 
-### Detailed Setup
-See [docs/setup-guide.md](docs/setup-guide.md) for complete instructions.
-
 ---
 
 ## 📈 Results & Metrics
@@ -157,7 +154,7 @@ See [docs/setup-guide.md](docs/setup-guide.md) for complete instructions.
 
 ## 🔒 Security Considerations
 
-- All sensitive credentials stored in `config.js`
+- All sensitive credentials securely stored
 - Webhook URLs not exposed in public code
 - Test files excluded from repository
 - No API keys hardcoded in source
@@ -168,8 +165,8 @@ See [docs/setup-guide.md](docs/setup-guide.md) for complete instructions.
 
 **Your Name**
 - Portfolio: [your-portfolio.com](https://your-portfolio.com)
-- LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/benjaminowolabi)
-- GitHub: [@yourusername](https://github.com/owolabenjade)
+- LinkedIn: [linkedin.com/in/benjaminowolabi](https://linkedin.com/in/benjaminowolabi)
+- GitHub: [@owolabenjade](https://github.com/owolabenjade)
 
 ---
 
