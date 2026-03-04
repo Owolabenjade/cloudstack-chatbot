@@ -1,8 +1,8 @@
 # CloudStack AI Chatbot - Portfolio Project
 
-An intelligent customer support chatbot system built with free tools for a B2B SaaS company.
+An intelligent customer support chatbot system built to solve common B2B support challenges.
 
-![CloudStack Demo](https://img.shields.io/badge/Status-Portfolio%20Project-blue)
+![CloudStack Demo](https://img.shields.io/badge/Status-Business%20Project-blue)
 ![Tools](https://img.shields.io/badge/Tools-Tawk.to%20%7C%20n8n%20%7C%20HubSpot%20%7C%20Slack-green)
 ![Cost](https://img.shields.io/badge/Cost-%240%2Fmonth-brightgreen)
 
