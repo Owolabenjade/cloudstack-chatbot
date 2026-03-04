@@ -263,8 +263,37 @@
         }
         
         .portfolio-note a {
-            color: #b45309;
+            color: #1d4ed8;
             font-weight: 600;
+        }
+        
+        .chat-prompt {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: #4A90D9;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(74, 144, 217, 0.4);
+            animation: bounce 2s infinite;
+            z-index: 999;
+            font-weight: 600;
+        }
+        
+        .chat-prompt:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 30px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #4A90D9 transparent transparent;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
         @media (max-width: 768px) {
@@ -432,6 +461,11 @@
         </p>
     </footer>
 
+    <!-- Chat Prompt Arrow -->
+    <div class="chat-prompt" id="chatPrompt">
+        👋 Try the chatbot! →
+    </div>
+
     <!-- 
     =====================================================
     TAWK.TO CHAT WIDGET
@@ -450,25 +484,31 @@
     =====================================================
     -->
     
-    <!-- Load config if available (for local dev) -->
-    <script src="config.js" onerror="console.log('Config not loaded - chat widget disabled')"></script>
+    <!-- Tawk.to Chat Widget -->
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69a53f71ef658b1c33d09105/1jimnvktu';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
     
-    <script>
-        // Only load Tawk.to if config exists
-        if (typeof CONFIG !== 'undefined' && CONFIG.TAWK_PROPERTY_ID) {
-            var Tawk_API = Tawk_API || {};
-            var Tawk_LoadStart = new Date();
-            (function(){
-                var s1 = document.createElement("script");
-                var s0 = document.getElementsByTagName("script")[0];
-                s1.async = true;
-                s1.src = 'https://embed.tawk.to/' + CONFIG.TAWK_PROPERTY_ID + '/' + CONFIG.TAWK_WIDGET_ID;
-                s1.charset = 'UTF-8';
-                s1.setAttribute('crossorigin','*');
-                s0.parentNode.insertBefore(s1, s0);
-            })();
-        }
+    // Hide the prompt when chat is opened
+    Tawk_API.onChatMaximized = function(){
+        document.getElementById('chatPrompt').style.display = 'none';
+    };
+    
+    // Hide prompt after 10 seconds anyway
+    setTimeout(function(){
+        var prompt = document.getElementById('chatPrompt');
+        if(prompt) prompt.style.opacity = '0';
+    }, 10000);
     </script>
+    <!--End of Tawk.to Script-->
 
 </body>
 </html>
