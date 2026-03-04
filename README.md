@@ -164,7 +164,6 @@ cloudstack-chatbot/
 ## 👤 Author
 
 **Your Name**
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
 - LinkedIn: [linkedin.com/in/benjaminowolabi](https://linkedin.com/in/benjaminowolabi)
 - GitHub: [@owolabenjade](https://github.com/owolabenjade)
 
