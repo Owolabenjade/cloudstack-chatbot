@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudStack - Project Management Software</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        nav {
+            background: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4A90D9;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #4A90D9;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            background: #4A90D9;
+            color: #fff;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #3a7bc8;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #4A90D9;
+            color: #4A90D9;
+        }
+        
+        .btn-outline:hover {
+            background: #4A90D9;
+            color: #fff;
+        }
+        
+        .hero {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            padding: 2rem;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card h3 {
+            color: #4A90D9;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .pricing {
+            padding: 4rem 2rem;
+            background: #f9fafb;
+        }
+        
+        .pricing h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+        
+        .pricing-card.popular {
+            border: 3px solid #4A90D9;
+            transform: scale(1.05);
+        }
+        
+        .popular-badge {
+            background: #4A90D9;
+            color: #fff;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4A90D9;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pricing-features li:before {
+            content: "✓";
+            color: #4A90D9;
+            margin-right: 0.5rem;
+        }
+        
+        .chatbot-info {
+            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .chatbot-info h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chatbot-info > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .chatbot-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .chatbot-feature {
+            background: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #4A90D9;
+        }
+        
+        .chatbot-feature h4 {
+            color: #4A90D9;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        footer p {
+            opacity: 0.7;
+        }
+        
+        .portfolio-note {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .portfolio-note a {
+            color: #b45309;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Portfolio Note -->
+    <div class="portfolio-note">
+        📋 <strong>Portfolio Project:</strong> This is a demo site showcasing an AI chatbot implementation. 
+        <a href="https://github.com/YOUR_USERNAME/cloudstack-chatbot" target="_blank">View the full project on GitHub →</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">☁️ CloudStack</div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#chatbot">AI Chatbot</a></li>
+        </ul>
+        <div>
+            <a href="#" class="btn btn-outline" style="margin-right: 0.5rem;">Log In</a>
+            <a href="#" class="btn">Start Free Trial</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Project Management That Actually Works</h1>
+        <p>CloudStack helps teams plan, track, and deliver projects on time. Join 380+ companies who've simplified their workflow.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn">Start Free Trial</a>
+            <a href="#" class="btn btn-outline">Book a Demo</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2>Everything you need to ship faster</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>📋 Task Management</h3>
+                <p>Organize work with boards, lists, and cards. Drag and drop to prioritize. Never miss a deadline.</p>
+            </div>
+            <div class="feature-card">
+                <h3>👥 Team Collaboration</h3>
+                <p>Real-time updates, comments, and @mentions keep everyone aligned without endless meetings.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Resource Planning</h3>
+                <p>See who's working on what. Balance workloads. Prevent burnout before it happens.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⏱️ Time Tracking</h3>
+                <p>Built-in timers and manual entry. Track billable hours. Generate client reports.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔗 40+ Integrations</h3>
+                <p>Connect with Slack, Jira, GitHub, Google Workspace, and more. Your tools, unified.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📈 Reporting & Analytics</h3>
+                <p>Dashboards that show what matters. Track velocity, identify bottlenecks, celebrate wins.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <h2>Simple, transparent pricing</h2>
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$29<span>/user/mo</span></div>
+                <ul class="pricing-features">
+                    <li>Unlimited projects</li>
+                    <li>Task management</li>
+                    <li>Basic reporting</li>
+                    <li>5 integrations</li>
+                    <li>Email support</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Start Free Trial</a>
+            </div>
+            
+            <div class="pricing-card popular">
+                <span class="popular-badge">Most Popular</span>
+                <h3>Pro</h3>
+                <div class="price">$59<span>/user/mo</span></div>
+                <ul class="pricing-features">
+                    <li>Everything in Starter</li>
+                    <li>Resource planning</li>
+                    <li>Time tracking</li>
+                    <li>Advanced reporting</li>
+                    <li>Unlimited integrations</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="#" class="btn">Start Free Trial</a>
+            </div>
+            
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">$99<span>/user/mo</span></div>
+                <ul class="pricing-features">
+                    <li>Everything in Pro</li>
+                    <li>SSO / SAML</li>
+                    <li>Custom workflows</li>
+                    <li>Dedicated support</li>
+                    <li>SLA guarantee</li>
+                    <li>Custom contracts</li>
+                </ul>
+                <a href="#" class="btn btn-outline">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Section -->
+    <section class="chatbot-info" id="chatbot">
+        <h2>🤖 AI-Powered Customer Support</h2>
+        <p>This demo site features an intelligent chatbot that handles customer inquiries 24/7.</p>
+        
+        <div class="chatbot-features">
+            <div class="chatbot-feature">
+                <h4>💬 Instant FAQ Responses</h4>
+                <p>Answers pricing, features, and integration questions automatically.</p>
+            </div>
+            <div class="chatbot-feature">
+                <h4>🎯 Lead Qualification</h4>
+                <p>Captures company size, use case, timeline, and routes VIP leads to sales.</p>
+            </div>
+            <div class="chatbot-feature">
+                <h4>🔔 Smart Notifications</h4>
+                <p>Alerts team via Slack for VIP leads, support requests, and churn risks.</p>
+            </div>
+            <div class="chatbot-feature">
+                <h4>📊 CRM Integration</h4>
+                <p>Automatically creates contacts in HubSpot with qualification data.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="logo" style="margin-bottom: 1rem; color: #fff;">☁️ CloudStack</div>
+        <p>© 2024 CloudStack. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.875rem;">
+            This is a portfolio demo project showcasing AI chatbot implementation.
+        </p>
+    </footer>
+
+    <!-- 
+    =====================================================
+    TAWK.TO CHAT WIDGET
+    =====================================================
+    
+    NOTE: The widget code is loaded from an external config file
+    for security. See README.md for setup instructions.
+    
+    For local development, create a file called 'config.js' with:
+    
+    const CONFIG = {
+        TAWK_PROPERTY_ID: 'your-property-id',
+        TAWK_WIDGET_ID: 'your-widget-id'
+    };
+    
+    =====================================================
+    -->
+    
+    <!-- Load config if available (for local dev) -->
+    <script src="config.js" onerror="console.log('Config not loaded - chat widget disabled')"></script>
+    
+    <script>
+        // Only load Tawk.to if config exists
+        if (typeof CONFIG !== 'undefined' && CONFIG.TAWK_PROPERTY_ID) {
+            var Tawk_API = Tawk_API || {};
+            var Tawk_LoadStart = new Date();
+            (function(){
+                var s1 = document.createElement("script");
+                var s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/' + CONFIG.TAWK_PROPERTY_ID + '/' + CONFIG.TAWK_WIDGET_ID;
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin','*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        }
+    </script>
+
+</body>
+</html>
