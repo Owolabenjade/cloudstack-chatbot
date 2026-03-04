@@ -6,6 +6,7 @@ secrets.txt
 .env
 .env.local
 .env.*.local
+test-local.html
 
 # API Keys and Tokens
 **/api-keys.txt
