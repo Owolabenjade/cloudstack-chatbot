@@ -254,11 +254,10 @@
         }
         
         .portfolio-note {
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
             padding: 1rem;
-            margin: 1rem 2rem;
-            border-radius: 8px;
+            margin: 0;
             text-align: center;
         }
         
@@ -279,6 +278,7 @@
             animation: bounce 2s infinite;
             z-index: 999;
             font-weight: 600;
+            transition: opacity 0.3s;
         }
         
         .chat-prompt:after {
@@ -294,6 +294,34 @@
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+        
+        .notification.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
         }
         
         @media (max-width: 768px) {
@@ -313,15 +341,25 @@
             .pricing-card.popular {
                 transform: none;
             }
+            
+            .chat-prompt {
+                bottom: 80px;
+                right: 15px;
+                font-size: 0.9rem;
+                padding: 0.75rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Notification Toast -->
+    <div id="notification" class="notification"></div>
+
     <!-- Portfolio Note -->
     <div class="portfolio-note">
-        📋 <strong>Portfolio Project:</strong> This is a demo site showcasing an AI chatbot implementation. 
-        <a href="https://github.com/owolabenjade/cloudstack-chatbot" target="_blank">View the full project on GitHub →</a>
+        📋 <strong>Portfolio Demo:</strong> This site showcases an AI chatbot system. Try the chat widget! 
+        <a href="https://github.com/Clerkie12/cloudstack-chatbot" target="_blank">View on GitHub →</a>
     </div>
 
     <!-- Navigation -->
@@ -430,24 +468,24 @@
     <!-- AI Chatbot Section -->
     <section class="chatbot-info" id="chatbot">
         <h2>🤖 AI-Powered Customer Support</h2>
-        <p>This demo site features an intelligent chatbot that handles customer inquiries 24/7.</p>
+        <p>This demo features an intelligent chatbot with automated lead capture and CRM integration.</p>
         
         <div class="chatbot-features">
             <div class="chatbot-feature">
-                <h4>💬 Instant FAQ Responses</h4>
-                <p>Answers pricing, features, and integration questions automatically.</p>
+                <h4>💬 Instant Responses</h4>
+                <p>Get answers about pricing, features, and integrations instantly.</p>
             </div>
             <div class="chatbot-feature">
                 <h4>🎯 Lead Qualification</h4>
-                <p>Captures company size, use case, timeline, and routes VIP leads to sales.</p>
+                <p>Automatically captures company info and routes VIP leads to sales.</p>
             </div>
             <div class="chatbot-feature">
-                <h4>🔔 Smart Notifications</h4>
-                <p>Alerts team via Slack for VIP leads, support requests, and churn risks.</p>
+                <h4>🔔 Real-time Alerts</h4>
+                <p>Sales team gets instant Slack notifications for hot leads.</p>
             </div>
             <div class="chatbot-feature">
                 <h4>📊 CRM Integration</h4>
-                <p>Automatically creates contacts in HubSpot with qualification data.</p>
+                <p>Contacts automatically created in HubSpot with full details.</p>
             </div>
         </div>
     </section>
@@ -457,7 +495,7 @@
         <div class="logo" style="margin-bottom: 1rem; color: #fff;">☁️ CloudStack</div>
         <p>© 2024 CloudStack. All rights reserved.</p>
         <p style="margin-top: 1rem; font-size: 0.875rem;">
-            This is a portfolio demo project showcasing AI chatbot implementation.
+            Portfolio demo showcasing AI chatbot implementation with Tawk.to, n8n, HubSpot & Slack.
         </p>
     </footer>
 
@@ -466,49 +504,159 @@
         👋 Try the chatbot! →
     </div>
 
-    <!-- 
-    =====================================================
-    TAWK.TO CHAT WIDGET
-    =====================================================
+    <!-- Notification Helper -->
+    <script>
+    function showNotification(message, type) {
+        var notif = document.getElementById('notification');
+        notif.textContent = message;
+        notif.className = 'notification ' + type + ' show';
+        setTimeout(function() {
+            notif.className = 'notification ' + type;
+        }, 4000);
+    }
+    </script>
+
+    <!-- Tawk.to Chat Widget with Auto-Integration -->
+    <script type="text/javascript">
+    // =====================================================
+    // TAWK.TO + N8N AUTOMATIC INTEGRATION
+    // =====================================================
     
-    NOTE: The widget code is loaded from an external config file
-    for security. See README.md for setup instructions.
+    var Tawk_API = Tawk_API || {};
+    var Tawk_LoadStart = new Date();
     
-    For local development, create a file called 'config.js' with:
+    // n8n Webhook URL for new leads
+    var N8N_WEBHOOK_URL = 'https://primary-production-9efb.up.railway.app/webhook/new-lead';
     
-    const CONFIG = {
-        TAWK_PROPERTY_ID: 'your-property-id',
-        TAWK_WIDGET_ID: 'your-widget-id'
+    // Store visitor data
+    var visitorData = {
+        name: '',
+        email: '',
+        message: '',
+        pageUrl: window.location.href,
+        timestamp: new Date().toISOString()
     };
     
-    =====================================================
-    -->
+    // =====================================================
+    // TAWK.TO EVENT HANDLERS
+    // =====================================================
     
-    <!-- Tawk.to Chat Widget -->
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    // When pre-chat form is submitted (visitor provides details)
+    Tawk_API.onPrechatSubmit = function(data) {
+        console.log('Pre-chat form submitted:', data);
+        
+        // Capture the form data
+        if (data.name) visitorData.name = data.name;
+        if (data.email) visitorData.email = data.email;
+        if (data.question) visitorData.message = data.question;
+        
+        // Parse name into first/last
+        var nameParts = (visitorData.name || 'Visitor Unknown').split(' ');
+        var firstName = nameParts[0] || 'Visitor';
+        var lastName = nameParts.slice(1).join(' ') || 'Unknown';
+        
+        // Send to n8n webhook
+        sendToN8N({
+            firstName: firstName,
+            lastName: lastName,
+            email: visitorData.email || 'no-email@provided.com',
+            company: 'From Chat Widget',
+            companySize: 'Unknown',
+            useCase: visitorData.message || 'General inquiry',
+            timeline: 'Unknown',
+            role: 'Unknown',
+            source: 'Tawk.to Pre-Chat Form',
+            pageUrl: visitorData.pageUrl
+        });
+        
+        // Show notification
+        showNotification('✅ Thanks! Your info has been received.', 'success');
+    };
+    
+    // When offline form is submitted
+    Tawk_API.onOfflineSubmit = function(data) {
+        console.log('Offline form submitted:', data);
+        
+        // Parse name
+        var nameParts = (data.name || 'Visitor Unknown').split(' ');
+        var firstName = nameParts[0] || 'Visitor';
+        var lastName = nameParts.slice(1).join(' ') || 'Unknown';
+        
+        // Send to n8n webhook
+        sendToN8N({
+            firstName: firstName,
+            lastName: lastName,
+            email: data.email || 'no-email@provided.com',
+            company: 'From Offline Form',
+            companySize: 'Unknown',
+            useCase: data.message || data.question || 'Offline inquiry',
+            timeline: 'Unknown',
+            role: 'Unknown',
+            source: 'Tawk.to Offline Form',
+            pageUrl: window.location.href
+        });
+        
+        showNotification('✅ Message received! We\'ll respond within 4 hours.', 'success');
+    };
+    
+    // When chat starts
+    Tawk_API.onChatStarted = function() {
+        console.log('Chat started');
+        // Hide the prompt
+        var prompt = document.getElementById('chatPrompt');
+        if (prompt) prompt.style.display = 'none';
+    };
+    
+    // When chat widget is maximized
+    Tawk_API.onChatMaximized = function() {
+        var prompt = document.getElementById('chatPrompt');
+        if (prompt) prompt.style.opacity = '0';
+    };
+    
+    // =====================================================
+    // N8N WEBHOOK FUNCTION
+    // =====================================================
+    
+    function sendToN8N(leadData) {
+        console.log('Sending to n8n:', leadData);
+        
+        fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(leadData),
+            mode: 'no-cors' // Required for cross-origin webhook
+        })
+        .then(function() {
+            console.log('Data sent to n8n successfully');
+        })
+        .catch(function(error) {
+            console.error('Error sending to n8n:', error);
+        });
+    }
+    
+    // =====================================================
+    // LOAD TAWK.TO WIDGET
+    // =====================================================
+    
     (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/69a53f71ef658b1c33d09105/1jimnvktu';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
+        var s1 = document.createElement("script");
+        var s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/69a53f71ef658b1c33d09105/1jimnvktu';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
     })();
     
-    // Hide the prompt when chat is opened
-    Tawk_API.onChatMaximized = function(){
-        document.getElementById('chatPrompt').style.display = 'none';
-    };
-    
-    // Hide prompt after 10 seconds anyway
+    // Hide chat prompt after 15 seconds
     setTimeout(function(){
         var prompt = document.getElementById('chatPrompt');
-        if(prompt) prompt.style.opacity = '0';
-    }, 10000);
+        if (prompt) prompt.style.opacity = '0';
+    }, 15000);
+    
     </script>
-    <!--End of Tawk.to Script-->
 
 </body>
 </html>
